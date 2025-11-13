@@ -27,7 +27,7 @@ If collateral < liquidation threshold, liquidators can repay the borrower's debt
 
 Program:
 ```
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 contract DeFiLending {
@@ -53,16 +53,11 @@ contract DeFiLending {
     }
 
     function borrow(uint256 amount) public payable {
-        require(msg.value >= (amount * liquidationThreshold) / 100, "Nota enough collateral");
+        require(msg.value >= (amount * liquidationThreshold) / 100, "Not enough collateral");
         borrowed[msg.sender] += amount;
         collateral[msg.sender] += msg.value;
         payable(msg.sender).transfer(amount);
         emit Borrowed(msg.sender, amount, msg.value);
-    }
-    function reduceCollateral(address user, uint256 amount) public {
-    require(msg.sender == owner, "Only owner can reduce");
-    require(collateral[user] >= amount, "Not enough collateral to reduce");
-    collateral[user] -= amount;
     }
 
     function liquidate(address borrower) public {
@@ -80,13 +75,16 @@ contract DeFiLending {
 ```
 # Expected Output:
 Users can deposit ETH and earn interest.
+<img width="1920" height="1080" alt="Screenshot 2025-10-23 093444" src="https://github.com/user-attachments/assets/903819fa-b9d5-4d92-b069-b131163f7bb3" />
 
 
 Users can borrow ETH by providing collateral.
+<img width="1920" height="1080" alt="Screenshot 2025-10-23 093451" src="https://github.com/user-attachments/assets/288a4a76-3e05-45b2-8e69-e07a6af1181d" />
 
 
 If collateral < 150% of borrowed amount, liquidators can seize the collateral.
 
+<img width="1920" height="1080" alt="Screenshot 2025-10-23 093457" src="https://github.com/user-attachments/assets/a1d02c40-cffe-44cf-b1bf-002f2fd25201" />
 
 
 # High-Level Overview:
@@ -99,4 +97,4 @@ Introduces risk management: overcollateralization and liquidation.
 Directly related to DeFi protocols like Aave and Compound.
 
 # RESULT : 
-
+Thus decentralized lending protocol where users can deposit assets to earn interest and borrow assets by providing collateral is executed successfully.
